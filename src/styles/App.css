@@ -37,9 +37,24 @@ body {
   list-style: none;
   display: inline-block;
   margin: 0 10px;
+  cursor: pointer;
+}
+
+.categories-nav li a {
+  text-decoration: none;
+  color: inherit;
   background: #efefef;
   padding: 10px;
-  cursor: pointer;
+  display: block;
+}
+
+.categories-nav li a:hover {
+
+}
+
+.categories-nav li a.active {
+  background: #000;
+  color: #fff;
 }
 
 /* POSTS */
