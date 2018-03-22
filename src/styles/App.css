@@ -2,6 +2,10 @@ body {
   font-size: 16px;
   font-family: 'Maven Pro', sans-serif;
 }
+a{
+  text-decoration: none;
+  color: inherit;
+}
 
 .App {
   text-align: center;
@@ -25,6 +29,17 @@ body {
 
 .App-intro {
   font-size: large;
+}
+
+.categories-nav,
+.add-post {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.add-post i{
+  text-align: right;
+  font-size: 2.25em;
 }
 
 .categories-nav{
@@ -63,9 +78,14 @@ body {
   margin: 0 auto;
 }
 
+.posts a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .posts .post {
   background: #efefef;
-  padding: 10px;
+  padding: 1em;
   margin: 15px auto;
   text-align: left;
   position: relative;
@@ -76,25 +96,30 @@ body {
   font-size: 0.65em;
 }
 
-.posts .post h2 {
-  font-size: 18px;
-  font-size: 1.125em;
-}
-
 .posts .post h2,
 .posts .post p {
   margin: 10px auto;
 }
 
+.posts .post h2 {
+  font-size: 20px;
+  font-size: 1.25em;
+  margin: 1em auto;
+}
+
 .posts .post p {
   font-size: 16px;
   font-size: 1em;
+  max-width: 70%;
+  margin: 1em 0;
+  line-height: 1.4;
 }
 
 .posts .post .post-actions {
   position: absolute;
-  right: 2%;
+  right: 0;
   bottom: 5%;
+  padding: 1em;
 }
 
 .posts .post .post-actions span {
@@ -104,6 +129,67 @@ body {
 .posts .post .post-actions i{
   font-size: 16px;
   font-size: 1em;
+}
+
+form {
+  width: 400px;
+  text-align: left;
+  margin: 0 auto;
+}
+form .form-field {
+  text-align: left;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+}
+form label,
+form input,
+form textarea {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: left;
+  margin: 10px;
+}
+
+form label {
+  flex: 1;
+}
+form input,
+form textarea,
+form select {
+  flex: 5;
+}
+
+form input {
+  text-align: left;
+  border: 1px solid #000;
+  height: 25px;
+}
+
+form textarea {
+  resize: none;
+  outline: none;
+  border: 1px solid #000;
+}
+.input-message-box {
+  height: 50px;
+  padding: 10px;
+  transition: all 0.5s ease-in-out;
+}
+.submit-button {
+  justify-content: flex-end;
+}
+
+.submit-button button {
+  background: none;
+  border: 0;
+}
+
+.submit-button button span,
+.submit-button button i {
+  vertical-align: middle;
+  display: inline-block;
+  margin: 0 0 0 10px;
 }
 
 @keyframes App-logo-spin {

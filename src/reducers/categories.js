@@ -1,11 +1,11 @@
 import * as actions from '../actions/Constants';
 
-const categories = (state=[], action) => {
-  const { categories } = action;
+const categories = (state = [], action) => {
+  const { data } = action;
 
   switch (action.type) {
     case actions.LOAD_CATEGORIES:
-      return categories;
+      return data;
     default:
       return state;
   }

@@ -1,9 +1,9 @@
 import * as actions from './Constants';
 import * as ReadableAPI from '../utils';
 
-const loadCategories = categories => ({
-    type: actions.LOAD_CATEGORIES,
-    categories
+const loadCategories = data => ({
+  type: actions.LOAD_CATEGORIES,
+  data,
 });
 
 export const getCategories = () => dispatch => (

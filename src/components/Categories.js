@@ -5,20 +5,6 @@ import {NavLink} from 'react-router-dom';
 import {getCategories} from '../actions/CategoriesActions';
 
 class Categories extends Component {
-  constructor(props) {
-    super(props);
-    this.isActive = this.isActive.bind(this)
-  }
-
-  isActive = (match, location) => {
-    if (!match) {
-      return false
-    }
-    const category = parseInt(match.params.category)
-    console.log(category + ' location is - ' + location);
-    if(category === location) return true
-  }
-
   componentDidMount() {
     this.props.getCategories();
   }
@@ -26,20 +12,39 @@ class Categories extends Component {
   render() {
     const {categories} = this.props;
 
-    return (<div>
+    return (
+      <div>
       <h2>Categories</h2>
       <ul className="categories-nav">
         {
-          categories !== undefined && categories.map(category => (<li key={category.path}>
-            <NavLink to={`/category/${category.path}`}
-            activeClassName='active'
-            isActive={this.isActive}>
-              {category.name}
+          <li key='home'>
+            <NavLink exact to='/'
+              activeClassName='active'>
+              Home
             </NavLink>
-          </li>))
+          </li>
+        }
+        {
+          categories !== undefined && categories.map(category => (
+            <li key={category.path}>
+              <NavLink exact to={`/category/${category.path}`}
+                activeClassName='active'>
+                {category.name}
+              </NavLink>
+            </li>
+          ))
         }
       </ul>
-    </div>);
+
+      <div className="add-post">
+        <NavLink exact to='/add-post'
+          activeClassName='active'>
+          <i className="material-icons">add_box</i>
+        </NavLink>
+
+      </div>
+    </div>
+  );
   }
 }
 
@@ -49,4 +54,4 @@ Categories.propTypes = {
 
 const mapStateToProps = ({categories}) => ({categories})
 
-export default connect(mapStateToProps, {getCategories})(Categories);
+export default connect(mapStateToProps, { getCategories }, null, { pure: false })(Categories);
