@@ -10,7 +10,7 @@ export const SORT_POSTS = 'SORT_POSTS';
 
 export const VOTE = 'VOTE';
 
-export const LOAD_COMMENT = 'LOAD_COMMENT';
+export const LOAD_COMMENTS = 'LOAD_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';

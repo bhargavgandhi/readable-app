@@ -1,6 +1,8 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {getPosts} from '../actions/PostsActions';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import moment from 'moment';
+import { getPosts } from '../actions/PostsActions';
+import Comments from './Comments';
 
 class Post extends Component {
   componentDidMount() {
@@ -8,23 +10,23 @@ class Post extends Component {
   }
 
   render() {
-    const {posts} = this.props;
+    const { posts } = this.props;
     const postID = this.props.match.params.postid;
     return (
       <div>
         <h2>Posts</h2>
         <div className="posts">
           {
-            posts !== undefined && posts.filter(
-              post => postID !== undefined
-              ? post.id === postID
-              : post
-            )
+            posts !== undefined && posts.filter(post =>
+              (postID !== undefined ? post.id === postID : post))
             .map(post => (
-                <div className="post" key={post.id}>
+              <div className="post" key={post.id}>
                 <span className="post-header">
-                  <span>{post.author}|</span>
+                  <span>{post.author} | </span>
                   <span>{post.category}</span>
+                  <span className="span-block timestamp">
+                    <i className="material-icons">access_time</i> {moment(post.timestamp).fromNow()}
+                  </span>
                 </span>
                 <h2>
                   {post.title}
@@ -50,14 +52,18 @@ class Post extends Component {
                     {post.commentCount}
                   </span>
                 </span>
-              </div>))
+              </div>
+            ))
           }
+          <Comments postID={postID} />
         </div>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({posts}) => ({posts})
+const mapStateToProps = ({ posts }) => ({
+  posts,
+});
 
-export default connect(mapStateToProps, {getPosts})(Post);
+export default connect(mapStateToProps, { getPosts })(Post);

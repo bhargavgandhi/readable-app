@@ -22,6 +22,7 @@ export const addNewPost = post => dispatch => (
   ReadableAPI
     .addPost(post)
     .then(data => dispatch(SubmitPost(data)))
+    .then(() => dispatch(getPosts()))
 );
 
 export default {

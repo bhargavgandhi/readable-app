@@ -31,6 +31,10 @@ a{
   font-size: large;
 }
 
+.span-block{
+  display: block;
+}
+
 .categories-nav,
 .add-post {
   display: inline-block;
@@ -78,12 +82,23 @@ a{
   margin: 0 auto;
 }
 
+.comments {
+  width: 80%;
+  margin: 0;
+}
+
+.comments h2 {
+  margin:0;
+  text-align: left;
+}
+
 .posts a {
   text-decoration: none;
   color: inherit;
 }
 
-.posts .post {
+.posts .post,
+.comments .comment {
   background: #efefef;
   padding: 1em;
   margin: 15px auto;
@@ -91,23 +106,28 @@ a{
   position: relative;
 }
 
-.posts .post .post-header {
+.posts .post .post-header,
+.comments .comment .comment-header {
   font-size: 10px;
   font-size: 0.65em;
 }
 
 .posts .post h2,
-.posts .post p {
+.posts .post p,
+.comments .comment h2,
+.comments .comment p {
   margin: 10px auto;
 }
 
-.posts .post h2 {
+.posts .post h2,
+.comments .comment h2 {
   font-size: 20px;
   font-size: 1.25em;
   margin: 1em auto;
 }
 
-.posts .post p {
+.posts .post p,
+.comments .comment p {
   font-size: 16px;
   font-size: 1em;
   max-width: 70%;
@@ -115,32 +135,49 @@ a{
   line-height: 1.4;
 }
 
-.posts .post .post-actions {
+.posts .post .post-actions,
+.comments .comment .comment-actions {
   position: absolute;
   right: 0;
   bottom: 5%;
   padding: 1em;
 }
 
-.posts .post .post-actions span {
+.posts .post .post-actions span,
+.comments .comment .comment-actions span {
   display: inline-block;
   margin: 0 5px;
 }
-.posts .post .post-actions i{
+.posts .post .post-actions i,
+.comments .comment .comment-actions i{
   font-size: 16px;
   font-size: 1em;
 }
 
+.author-name{
+  font-size: 12px;
+}
+.timestamp {
+  margin: 5px auto;
+}
+.timestamp i{
+  font-size: 12px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+
+/* Form Styles */
 form {
-  width: 400px;
+  width: 500px;
   text-align: left;
   margin: 0 auto;
 }
 form .form-field {
   text-align: left;
   margin: 20px auto;
-  display: flex;
-  align-items: center;
+
 }
 form label,
 form input,
@@ -148,21 +185,49 @@ form textarea {
   display: inline-block;
   vertical-align: middle;
   text-align: left;
-  margin: 10px;
 }
 
-form label {
-  flex: 1;
+form label,
+.submit-button {
+  display: flex;
+  align-items: center;
 }
-form input,
-form textarea,
+form label span {
+  flex: 2;
+}
+form label input,
+form label textarea,
+form label select {
+  flex: 8;
+  appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  padding: 10px;
+  margin: 10px;
+  min-height: 25px;
+  border: 1px solid #333;
+  border-radius: 0;
+  background: transparent;
+}
+
 form select {
-  flex: 5;
+  position: relative;
+}
+form select::after {
+  content: 'v';
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: block;
+  width: 10px;
+  height: 10px;
+  color: #000;
+
 }
 
 form input {
   text-align: left;
-  border: 1px solid #000;
   height: 25px;
 }
 
@@ -173,7 +238,6 @@ form textarea {
 }
 .input-message-box {
   height: 50px;
-  padding: 10px;
   transition: all 0.5s ease-in-out;
 }
 .submit-button {
@@ -182,7 +246,9 @@ form textarea {
 
 .submit-button button {
   background: none;
-  border: 0;
+  border: 1px solid #333;
+  margin: 10px;
+  font-size: 0.875em;
 }
 
 .submit-button button span,
@@ -190,6 +256,14 @@ form textarea {
   vertical-align: middle;
   display: inline-block;
   margin: 0 0 0 10px;
+}
+
+#new-comment-form form {
+  width: 80%;
+  margin: 0;
+}
+#new-comment-form form label span {
+  flex: 3;
 }
 
 @keyframes App-logo-spin {

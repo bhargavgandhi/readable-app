@@ -1,6 +1,6 @@
 import * as actions from '../actions/Constants';
 
-export default function posts(state = [], action) {
+const posts = (state = [], action) => {
   const { post } = action;
 
   switch (action.type) {
@@ -9,9 +9,14 @@ export default function posts(state = [], action) {
     case actions.ADD_POST:
       return {
         ...state,
-        posts: state.posts !== undefined && state.posts.concat(post),
+        posts: {
+          ...state.posts,
+          post,
+        },
       };
     default:
       return state;
   }
-}
+};
+
+export default posts;
