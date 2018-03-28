@@ -18,8 +18,8 @@
     "sort-by": "^1.2.0"
   },
   "scripts": {
-    "prestart": "cd readable-back/api-server",
-    "server": "cd readable-back/api-server  && node server",
+    "prestart": "cd backend",
+    "server": "cd backend && node server",
     "start": "npm run server | react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
