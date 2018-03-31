@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import moment from 'moment';
 import sortBy from 'sort-by';
-import { getPosts } from '../actions/PostsActions';
+import { getPosts, removePost } from '../actions/PostsActions';
 
 class Posts extends Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class Posts extends Component {
     };
 
     this.sortPosts = this.sortPosts.bind(this);
+    this.deletePost = this.deletePost.bind(this);
   }
 
   componentDidMount() {
@@ -23,6 +24,9 @@ class Posts extends Component {
     this.setState({
       sorting: filter,
     });
+  }
+  deletePost(post) {
+    this.props.removePost(post);
   }
 
   render() {
@@ -43,25 +47,33 @@ class Posts extends Component {
               (category !== undefined ? post.category === category : post))
               .sort(sortBy(`-${sorting}`))
               .map(post => (
-                <NavLink exact to={`/${post.category}/${post.id}`} key={post.id}>
-                  <div className="post">
-                    <span className="post-header">
-                      <span>{post.author} | </span>
-                      <span>{post.category}</span>
-                      <span className="span-block timestamp">
-                        <i className="material-icons">access_time</i> {moment(post.timestamp).fromNow()}
-                      </span>
+                <div className="post" key={post.id}>
+                  <span className="post-header">
+                    <span>{post.author} | </span>
+                    <span>{post.category}</span>
+                    <span className="span-block timestamp">
+                      <i className="material-icons">access_time</i> {moment(post.timestamp).fromNow()}
                     </span>
-                    <h2> {post.title} </h2>
-                    <span className="post-actions">
-                      <span><i className="material-icons">thumb_up</i></span>
-                      {post.voteScore}
-                      <span><i className="material-icons">thumb_down</i></span>
-                      <span><i className="material-icons">comment</i></span>
-                      {post.commentCount}
+
+                    <span className="controls">
+                      <button className="deleteBtn" onClick={() => this.deletePost(post)}>
+                        <i className="material-icons">delete</i>
+                      </button>
                     </span>
-                  </div>
-                </NavLink>
+                  </span>
+                  <h2>
+                    <NavLink exact to={`/${post.category}/${post.id}`}>
+                      {post.title}
+                    </NavLink>
+                  </h2>
+                  <span className="post-actions">
+                    <span><i className="material-icons">thumb_up</i></span>
+                    {post.voteScore}
+                    <span><i className="material-icons">thumb_down</i></span>
+                    <span><i className="material-icons">comment</i></span>
+                    {post.commentCount}
+                  </span>
+                </div>
               ))
           }
         </div>
@@ -74,4 +86,4 @@ const mapStateToProps = ({ posts }) => ({
   posts,
 });
 
-export default connect(mapStateToProps, { getPosts })(Posts);
+export default connect(mapStateToProps, { getPosts, removePost })(Posts);

@@ -14,12 +14,15 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
+// Categories
 // Get Categories
 export const getCategories = () =>
   fetch(`${api}/categories`, { headers })
     .then(res => res.json())
     .then(data => data.categories);
 
+
+// Posts
 
 // Get Posts
 export const getPosts = () =>
@@ -44,23 +47,17 @@ export const addPost = post =>
     .then(data => data)
     .catch((error) => { console.log(error); });
 
-export const updatePost = (post) => {
-  const postData = {
-    ...post,
-    timestamp: new Date().getTime(),
-  };
+// Update Post
+export const updatePost = post =>
+  fetch(`${api}/posts/${post.id}`, {
+    method: 'PUT',
+    body: JSON.stringify(post),
+    headers,
+  })
+    .then(res => res.json())
+    .then(data => data);
 
-  return (
-    fetch(`${api}/posts/${post.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(postData),
-      headers,
-    })
-      .then(res => res.json())
-      .then(data => data)
-  );
-};
-
+// Delete / Remove Post
 export const removePost = id =>
   fetch(`${api}/posts/${id}`, {
     method: 'DELETE',
@@ -90,3 +87,10 @@ export const addNewComment = comment =>
     .then(res => res.json())
     .then(data => data)
     .catch((error) => { console.log(error); });
+
+// Delete Comment
+export const removeComment = id =>
+  fetch(`${api}/comments/${id}`, {
+    method: 'DELETE',
+    headers,
+  });

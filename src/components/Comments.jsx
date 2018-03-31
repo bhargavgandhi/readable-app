@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import sortBy from 'sort-by';
-import { getComments, addNewComment } from '../actions/CommentsActions';
+import { getComments, addNewComment, removeComment } from '../actions/CommentsActions';
 
 class Comments extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Comments extends Component {
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
+    this.deleteComment = this.deleteComment.bind(this);
   }
   // id: Any unique ID. As with posts, UUID is probably the best here.
   // timestamp: timestamp. Get this however you want.
@@ -53,8 +54,12 @@ class Comments extends Component {
       author: 'bg',
       parentId: this.props.postID,
     });
-
   }
+
+  deleteComment(comment) {
+    this.props.removeComment(comment);
+  }
+
   render() {
     const { comments } = this.props;
 
@@ -94,6 +99,11 @@ class Comments extends Component {
                 <span className="timestamp">
                   <i className="material-icons">access_time</i> {moment(comment.timestamp).fromNow()}
                 </span>
+                <span className="controls">
+                  <button className="deleteBtn" onClick={() => this.deleteComment(comment)}>
+                    <i className="material-icons">delete</i>
+                  </button>
+                </span>
               </span>
               <p>
                 { comment.body }
@@ -120,4 +130,8 @@ const mapStateToProps = ({ comments }) => ({
   comments,
 });
 
-export default connect(mapStateToProps, { getComments, addNewComment })(Comments);
+export default connect(mapStateToProps, {
+  getComments,
+  addNewComment,
+  removeComment,
+})(Comments);

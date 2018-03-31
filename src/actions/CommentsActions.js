@@ -25,7 +25,20 @@ export const addNewComment = comment => dispatch => (
     .then(() => dispatch(getPosts()))
 );
 
-export default {
-  getComments,
-  addNewComment,
-};
+// Delete Comment
+export const DeleteComment = comment => ({
+  type: actions.DELETE_COMMENT,
+  comment,
+});
+
+export const removeComment = comment => dispatch => (
+  ReadableAPI
+    .removeComment(comment.id)
+    .then(dispatch(DeleteComment(comment)))
+    .then(() => dispatch(getPosts()))
+);
+
+// export default {
+//   getComments,
+//   addNewComment,
+// };

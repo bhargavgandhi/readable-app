@@ -11,6 +11,8 @@ const comments = (state = [], action) => {
         ...state,
         comment,
       ];
+    case actions.DELETE_COMMENT:
+      return state.filter(c => c.id !== comment.id);
     default:
       return state;
   }

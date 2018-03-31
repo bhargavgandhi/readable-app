@@ -14,6 +14,16 @@ const posts = (state = [], action) => {
           post,
         },
       };
+    case actions.UPDATE_POST:
+      return {
+        ...state,
+        posts: {
+          ...state.posts,
+          post,
+        },
+      };
+    case actions.DELETE_POST:
+      return state.filter(p => p.id !== post.id);
     default:
       return state;
   }
