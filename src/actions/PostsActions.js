@@ -8,10 +8,23 @@ export const loadPosts = post => ({
   post,
 });
 
-export const getPosts = () => dispatch => (
+export const getPosts = filter => dispatch => (
   ReadableAPI
-    .getPosts()
+    .getPosts(filter)
     .then(posts => dispatch(loadPosts(posts)))
+);
+
+
+// Load Single Posts
+export const loadSinglePost = post => ({
+  type: actions.LOAD_SINGLE_POST,
+  post,
+});
+
+export const getSinglePost = id => dispatch => (
+  ReadableAPI
+    .getSinglePost(id)
+    .then(post => dispatch(loadSinglePost(post)))
 );
 
 
@@ -30,14 +43,14 @@ export const addNewPost = post => dispatch => (
 
 
 // UPDATE POST
-export const EditPost = id => ({
+export const EditPost = post => ({
   type: actions.UPDATE_POST,
-  id,
+  post,
 });
 
-export const UpdatePost = id => dispatch => (
+export const updatePost = post => dispatch => (
   ReadableAPI
-    .updatePost(id)
+    .updatePost(post)
     .then(data => dispatch(EditPost(data)))
     .then(() => dispatch(getPosts()))
 );
@@ -53,6 +66,18 @@ export const removePost = post => dispatch => (
   ReadableAPI
     .removePost(post.id)
     .then(dispatch(DeletePost(post)))
+);
+
+
+const changePostVote = post => ({
+  type: actions.UPDATE_POST_VOTE,
+  post,
+});
+
+export const updatePostVote = (id, option) => dispatch => (
+  ReadableAPI
+    .updateVote(id, option, 'posts')
+    .then(data => dispatch(changePostVote(data)))
 );
 
 

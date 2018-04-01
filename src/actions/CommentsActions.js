@@ -1,6 +1,5 @@
 import * as actions from './Constants';
 import * as ReadableAPI from '../utils';
-import { getPosts } from '../actions/PostsActions';
 
 const loadComments = data => ({
   type: actions.LOAD_COMMENTS,
@@ -12,17 +11,30 @@ export const getComments = id => dispatch => (
     .getComments(id)
     .then(comments => dispatch(loadComments(comments)))
 );
+
 // Add Post
 export const SubmitComment = comment => ({
   type: actions.ADD_COMMENT,
   comment,
 });
 
-export const addNewComment = comment => dispatch => (
+export const addNewComment = (comment, parentId) => dispatch => (
   ReadableAPI
     .addNewComment(comment)
     .then(data => dispatch(SubmitComment(data)))
-    .then(() => dispatch(getPosts()))
+    .then(() => dispatch(getComments(parentId)))
+);
+
+// UPDATE POST
+export const EditComment = comment => ({
+  type: actions.UPDATE_COMMENT,
+  comment,
+});
+
+export const updateComment = comment => dispatch => (
+  ReadableAPI
+    .updateComment(comment)
+    .then(data => dispatch(EditComment(data)))
 );
 
 // Delete Comment
@@ -31,11 +43,23 @@ export const DeleteComment = comment => ({
   comment,
 });
 
-export const removeComment = comment => dispatch => (
+export const removeComment = (comment, parentId) => dispatch => (
   ReadableAPI
     .removeComment(comment.id)
     .then(dispatch(DeleteComment(comment)))
-    .then(() => dispatch(getPosts()))
+    .then(() => dispatch(getComments(parentId)))
+);
+
+// Update Comments Vote
+const changeCommentVote = comment => ({
+  type: actions.UPDATE_COMMENT_VOTE,
+  comment,
+});
+
+export const updateCommentVote = (id, option) => dispatch => (
+  ReadableAPI
+    .updateVote(id, option, 'comments')
+    .then(data => dispatch(changeCommentVote(data)))
 );
 
 // export default {

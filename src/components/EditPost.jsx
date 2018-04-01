@@ -1,59 +1,79 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addNewPost } from '../actions/PostsActions';
+import {
+  getSinglePost,
+  updatePost,
+} from '../actions/PostsActions';
 
-class AddPost extends Component {
+class EditPost extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      id: '',
       title: '',
       body: '',
-      category: 'react',
-      author: 'bg',
+      category: '',
     };
-
     this.handleInputChange = this.handleInputChange.bind(this);
-    this.handlePostSubmit = this.handlePostSubmit.bind(this);
+    this.handleUpdatePost = this.handleUpdatePost.bind(this);
+  }
+
+  componentDidMount() {
+    const id = this.props.match.params.id || false;
+    this.props.getSinglePost(id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.id !== this.props.match.params.id) {
+      const id = nextProps.match.params.id || false;
+      this.props.getSinglePost(id);
+    }
+  }
+
+  componentDidUpdate() {
+    const postArray = Object.keys(this.props.posts).map(p => this.props.posts[p]);
+    postArray.map(p => (
+      this.state.title === '' && this.setState({
+        id: p.id,
+        title: p.title,
+        body: p.body,
+        category: p.category,
+      })
+    ));
   }
 
   handleInputChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handlePostSubmit(e) {
+  handleUpdatePost(e) {
     e.preventDefault();
     const {
-      title, body, category, author,
+      id, title, body, category,
     } = this.state;
-    const postId = `bg${Math.floor(Math.random() * 100)}`;
-    const timestamp = new Date().getTime();
-    const submitPost = this.props.addNewPost;
 
     const post = {
-      id: postId,
-      timestamp,
+      id,
       title,
       body,
-      author,
       category,
     };
-    if (title !== '') {
-      submitPost(post).then(() => {
-        this.props.history.push(`/${post.category}/${post.id}`);
-      });
-    }
+
+    this.props.updatePost(post).then(() => {
+      this.props.history.push(`/${post.category}/${post.id}`);
+    });
   }
 
   render() {
     return (
       <div>
         <h2>
-          Add Post
+          Edit Post
         </h2>
         <div className="posts">
           <div id="new-post-form">
-            <form onSubmit={this.handlePostSubmit}>
+            <form onSubmit={this.handleUpdatePost}>
               <div className="form-field">
                 <label htmlFor="title">
                   <span>Title</span>
@@ -64,7 +84,6 @@ class AddPost extends Component {
                     value={this.state.title}
                     placeholder="Post Title..."
                     onChange={e => this.handleInputChange(e)}
-                    required
                   />
                 </label>
               </div>
@@ -79,28 +98,12 @@ class AddPost extends Component {
                     value={this.state.body}
                     placeholder="Body texts...."
                     onChange={e => this.handleInputChange(e)}
-                    required
                   />
-                </label>
-              </div>
-              <div className="form-field">
-                <label htmlFor="category">
-                  <span>Category</span>
-                  <select
-                    id="category"
-                    name="category"
-                    value={this.state.category}
-                    onChange={e => this.handleInputChange(e)}
-                  >
-                    <option value="react">react</option>
-                    <option value="redux">redux</option>
-                    <option value="udacity">udacity</option>
-                  </select>
                 </label>
               </div>
               <div className="form-field submit-button">
                 <button type="submit">
-                  <span>Submit</span>
+                  <span>Update</span>
                   <i className="material-icons">send</i>
                 </button>
               </div>
@@ -112,10 +115,16 @@ class AddPost extends Component {
   }
 }
 
-AddPost.propTypes = {
-  addNewPost: PropTypes.func.isRequired,
+EditPost.propTypes = {
+  getSinglePost: PropTypes.func.isRequired,
+  updatePost: PropTypes.func.isRequired,
 };
 
-export default connect(null, {
-  addNewPost,
-})(AddPost);
+const mapStateToProps = ({ posts }) => ({
+  posts,
+});
+
+export default connect(mapStateToProps, {
+  getSinglePost,
+  updatePost,
+})(EditPost);

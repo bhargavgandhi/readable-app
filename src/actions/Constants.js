@@ -9,6 +9,8 @@ export const DELETE_POST = 'DELETE_POST';
 export const SORT_POSTS = 'SORT_POSTS';
 
 export const VOTE = 'VOTE';
+export const UPDATE_POST_VOTE = 'UPDATE_POST_VOTE';
+export const UPDATE_COMMENT_VOTE = 'UPDATE_COMMENT_VOTE';
 
 export const LOAD_COMMENTS = 'LOAD_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';

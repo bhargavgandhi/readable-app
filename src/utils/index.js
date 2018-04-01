@@ -25,8 +25,16 @@ export const getCategories = () =>
 // Posts
 
 // Get Posts
-export const getPosts = () =>
-  fetch(`${api}/posts`, { headers })
+export const getPosts = (filter) => {
+  const url = filter ? `${api}/${filter}/posts` : `${api}/posts`;
+  return fetch(url, { headers })
+    .then(res => res.json())
+    .then(data => data);
+};
+
+// Get Single Post
+export const getSinglePost = id =>
+  fetch(`${api}/posts/${id}`, { headers })
     .then(res => res.json())
     .then(data => data);
 
@@ -88,9 +96,31 @@ export const addNewComment = comment =>
     .then(data => data)
     .catch((error) => { console.log(error); });
 
+// Update Comment
+export const updateComment = comment =>
+  fetch(`${api}/comments/${comment.id}`, {
+    method: 'PUT',
+    body: JSON.stringify(comment),
+    headers,
+  })
+    .then(res => res.json())
+    .then(data => data);
+
 // Delete Comment
 export const removeComment = id =>
   fetch(`${api}/comments/${id}`, {
     method: 'DELETE',
     headers,
   });
+
+  // VOTES
+
+  // Update VOTE
+export const updateVote = (id, option, type) =>
+  fetch(`${api}/${type}/${id}`, {
+    method: 'POST',
+    body: JSON.stringify({ id, option }),
+    headers,
+  })
+    .then(res => res.json())
+    .then(data => data);

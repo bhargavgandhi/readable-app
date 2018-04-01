@@ -10,7 +10,7 @@ import {
   updatePostVote,
 } from '../actions/PostsActions';
 
-class Posts extends Component {
+class CategoryPosts extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,7 +23,15 @@ class Posts extends Component {
   }
 
   componentDidMount() {
-    this.props.getPosts();
+    const filter = this.props.match.params.category || false;
+    this.props.getPosts(filter);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.match.params.category !== this.props.match.params.category) {
+      const filter = nextProps.match.params.category || false;
+      this.props.getPosts(filter);
+    }
   }
 
   sortPosts(filter) {
@@ -40,9 +48,9 @@ class Posts extends Component {
   }
 
   render() {
-    const { posts } = this.props;
-    const { category } = this.props.match.params || '';
     const { sorting } = this.state;
+    const { category } = this.props.match.params;
+    const { posts } = this.props;
 
     return (
       <div>
@@ -54,7 +62,7 @@ class Posts extends Component {
           </div>
           {
             posts !== undefined && Object.keys(posts).map(p => posts[p])
-              .filter(post =>
+            .filter(post =>
               (category !== undefined ? post.category === category : post))
               .sort(sortBy(`-${sorting}`))
               .map(post => (
@@ -113,7 +121,7 @@ class Posts extends Component {
   }
 }
 
-Posts.propTypes = {
+CategoryPosts.propTypes = {
   getPosts: PropTypes.func.isRequired,
   removePost: PropTypes.func.isRequired,
   updatePostVote: PropTypes.func.isRequired,
@@ -127,4 +135,4 @@ export default connect(mapStateToProps, {
   getPosts,
   removePost,
   updatePostVote,
-})(Posts);
+})(CategoryPosts);

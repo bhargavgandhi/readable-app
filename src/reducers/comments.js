@@ -11,8 +11,13 @@ const comments = (state = [], action) => {
         ...state,
         comment,
       ];
+    case actions.UPDATE_COMMENT:
+      return state.map(c => (c.id === comment.id ? comment : c));
     case actions.DELETE_COMMENT:
       return state.filter(c => c.id !== comment.id);
+
+    case actions.UPDATE_COMMENT_VOTE:
+      return state.map(c => (c.id === comment.id ? comment : c));
     default:
       return state;
   }

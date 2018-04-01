@@ -18,19 +18,14 @@
     "sort-by": "^1.2.0"
   },
   "scripts": {
-    "prestart": "cd backend",
+    "prestart": "cd backend && npm install",
     "server": "cd backend && node server",
     "start": "npm run server | react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "main": "index.jsx",
   "devDependencies": {
-    "eslint": "^4.19.0",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-plugin-import": "^2.9.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-react": "^7.7.0"
+    "eslint": "^4.19.0"
   }
 }
